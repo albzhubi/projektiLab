@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import './App.css';
 import img1 from './images/foto1.jpg';
 import img2 from './images/foto2.jpg';
-
-
+// import img1 from './images/foto3.jpg';
+// import img2 from './images/team1.jpg'; // Shtimi i imazhit të një anëtari të ekipit
 
 function App() {
+
+  const [sliderImages, setSliderImages] = useState([img1, img2]);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const changeSliderImage = () => {
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % sliderImages.length);
+  };
+
+  // Përdorimi i useEffect për të ndryshuar fotot pas një sekonde
+  useEffect(() => {
+    const intervalId = setInterval(changeSliderImage, 3000);
+    return () => clearInterval(intervalId); // Fshirja e intervalit kur komponenti zhvendoset
+  }, []);
+
   return (
     <div className="App">
       <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container">
-          <a className="navbar-brand" href="#"><span className='text-warning'>Build</span>Con</a>
+          <a className="navbar-brand" href="#"><span className='text-warning'>Farmaci</span>Shqiptare</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -26,76 +40,58 @@ function App() {
                 <a className="nav-link" href="#services">Services</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#portfolio">Portfolio</a>
+                <a className="nav-link" href="#products">Products</a> 
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#team">Team</a>
+                <a className="nav-link" href="#contact">Contact Us</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#contact">Contact</a>
+                <a className="nav-link" href="#login">Log In</a>
               </li>
-
-              
             </ul>
           </div>
         </div>
       </nav>
 
+      {/* Slider për produktet e fundit */}
       <div id="carouselExampleCaptions" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          {sliderImages.map((_, index) => (
+            <button key={index} type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to={index} className={currentSlide === index ? 'active' : ''} aria-current="true" aria-label={`Slide ${index + 1}`}></button>
+          ))}
         </div>
         <div className="carousel-inner">
-          <div className="carousel-item active">
-            <img src={img1} className="d-block w-100" alt="..." />
-            <div className="carousel-caption">
-              <h5>First slide label</h5>
-              <p>Some representative placeholder content for the first slide.</p>
-              <p><a href='#' className='btn btn-warning mt3'>Learn More</a></p>
+          {sliderImages.map((image, index) => (
+            <div key={index} className={`carousel-item ${index === currentSlide ? 'active' : ''}`}>
+              <img src={image} className="d-block w-100" alt={`Product ${index + 1}`} />
+              <div className="carousel-caption">
+                <h5>{index === 0 ? 'Aspirin' : 'Vitamin C'}</h5>
+                <p>{index === 0 ? 'For relief of minor aches and pains' : 'Boosts the immune system'}</p>
+                <p><a href='#' className='btn btn-warning mt3'>Buy Now</a></p>
+              </div>
             </div>
-          </div>
-          <div className="carousel-item">
-            <img src={img1} className="d-block w-100" alt="..." />
-            <div className="carousel-caption ">
-              <h5>Second slide label</h5>
-              <p>Some representative placeholder content for the second slide.</p>
-              <p><a href='#' className='btn btn-warning mt3'>Learn More</a></p>
-            </div>
-          </div>
-          <div className="carousel-item">
-            <img src={img1} className="d-block w-100" alt="..." />
-            <div className="carousel-caption">
-              <h5>Third slide label</h5>
-              <p>Some representative placeholder content for the third slide.</p>
-              <p><a href='#' className='btn btn-warning mt3'>Learn More</a></p>
-            </div>
-          </div>
+          ))}
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev" onClick={() => setCurrentSlide((prevSlide) => (prevSlide === 0 ? sliderImages.length - 1 : prevSlide - 1))}>
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Previous</span>
         </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next" onClick={changeSliderImage}>
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>
       </div>
 
-      {/* about section */}
-
-     
-      <section id="about" className="about-section-padding">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-4 col-md-12 col-12">
-              <div className="about-img">
+      <section id='services' className='about-section-padding'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-lg-4 col-md-12 col-12'>
+              <div className='about-img'>
                 <img src={img1} alt='' className='img-fluid' />
               </div>
             </div>
-            <div className="col-lg-8 col-md-12 col-12 ps-lg-5 mt-md-5 align-self-center">
-              <div className="about-text">
+            <div className='col-lg-8 col-md-12 col-12 ps-lg-5 mt-md-5 align-self-center'>
+              <div className='about-text'>
                 <h2>We Provide Best Quality <br />Services Ever</h2>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit</p>
                 <a href='#' className='btn btn-warning'>Learn More</a>
@@ -105,8 +101,60 @@ function App() {
         </div>
       </section>
 
+      {/* Pjesa e kodit për "Products" */}
+      <section id='products' className='products section-padding'>
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-12'>
+              <div className='section-header text-center pb-5'>
+                <h2>Our Products</h2>
+                <p>Explore our range of pharmaceutical products</p>
+              </div>
+            </div>
+          </div>
 
-      {/* services */}
+          <div className='row'>
+            <div className='col-12 col-md-6 col-lg-4'>
+              <div className='card text-light text-center bg-dark pb-2'>
+                <div className='card-body'>
+                  <img src={img1} className='img-fluid' alt='Product 1'/>
+                  <h3 className='card-title'>Product Name</h3>
+                  <p className='lead'>Product description goes here</p>
+                  <button className='btn btn-warning text-dark'>Buy Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div className='col-12 col-md-6 col-lg-4'>
+              <div className='card text-light text-center bg-dark pb-2'>
+                <div className='card-body'>
+                  <img src={img2} className='img-fluid' alt='Product 2'/>
+                  <h3 className='card-title'>Product Name</h3>
+                  <p className='lead'>Product description goes here</p>
+                  <button className='btn btn-warning text-dark'>Buy Now</button>
+                </div>
+              </div>
+            </div>
+
+            <div className='col-12 col-md-6 col-lg-4'>
+              <div className='card text-light text-center bg-dark pb-2'>
+                <div className='card-body'>
+                  <img src={img1} className='img-fluid' alt='Product 3'/>
+                  <h3 className='card-title'>Product Name</h3>
+                  <p className='lead'>Product description goes here</p>
+                  <button className='btn btn-warning text-dark'>Buy Now</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* Pjesa e kodit për "Our Services" */}
+
       <section id='services' className='services section-padding'>
         <div className='container'>
           <div className='row'>
@@ -158,135 +206,24 @@ function App() {
         </div>
       </section>
 
-      {/* portfolio section */}
 
-      <section id='portfolio' className='portfolio section-padding'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-            <div className='section-header text-center pb-5'>
-                <h2>Our Projects</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur</p>
-              </div>
-            </div>
-          </div>
+      {/* Pjesa e kodit për "Contact" dhe "Footer" mbetet e njëjtë */}
 
-          <div className='row'>
-            <div className='col-12 col-md-12 col-lg-4'>
-              <div className='card text-light text-center bg-white pb-2'>
-                <div className='card-body text-dark'>
-                  <div className='img-are mb-4'>
-                    <img src={img2} className='img-fluid' width='300px' height='300px'/>
-                    <p className='lead'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                    <button className='btn bg-warning text-dark'>Learn More</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-12 col-md-12 col-lg-4'>
-              <div className='card text-light text-center bg-white pb-2'>
-                <div className='card-body text-dark'>
-                  <div className='img-are mb-4'>
-                    <img src={img1} className='img-fluid'width='300px' height='100px'/>
-                    <p className='lead'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                    <button className='btn bg-warning text-dark'>Learn More</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-12 col-md-12 col-lg-4'>
-              <div className='card text-light text-center bg-white pb-2'>
-                <div className='card-body text-dark'>
-                  <div className='img-are mb-4'>
-                    <img src={img2} className='img-fluid' width='300px' height='300px'/>
-                    <p className='lead'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                    <button className='btn bg-warning text-dark'>Learn More</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* team section  */}
-
-      <section id='team' className='team section-padding'>
-        <div className='container'>
-          <div className='row'>
-            <div className='col-md-12'>
-              <div className='section-header text-center pb-5'>
-                <h2>Our Projects</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur</p>
-              </div>
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-12 col-md-6 col-lg-3'>
-              <div className='card text-center'>
-                <div className='card-body'>
-                  <img src={img1} className='img-fluid rounded-circle'/>
-                  <h3 className='card-title py-2'>Jack Wilson</h3>
-                  <p className='card-text'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-12 col-md-6 col-lg-3'>
-              <div className='card text-center'>
-                <div className='card-body'>
-                  <img src={img1} className='img-fluid rounded-circle'/>
-                  <h3 className='card-title py-2'>Jack Wilson</h3>
-                  <p className='card-text'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-12 col-md-6 col-lg-3'>
-              <div className='card text-center'>
-                <div className='card-body'>
-                  <img src={img1} className='img-fluid rounded-circle'/>
-                  <h3 className='card-title py-2'>Jack Wilson</h3>
-                  <p className='card-text'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='col-12 col-md-6 col-lg-3'>
-              <div className='card text-center'>
-                <div className='card-body'>
-                  <img src={img1} className='img-fluid rounded-circle'/>
-                  <h3 className='card-title py-2'>Jack Wilson</h3>
-                  <p className='card-text'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam expedita earum nesciunt hic a temporibus eaque non tempora adipisci dolore molestias vel facere</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-
-      {/* contact section*/}
-
+      {/* Pjesa e kodit për "Contact" */}
       <section id='contact' className='contact section-padding'>
         <div className='container'>
           <div className='row'>
             <div className='col-md-12'>
               <div className='section-header text-center pb-5'>
                 <h2>Contact Us</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur</p>
+                <p>Get in touch with us for any queries</p>
               </div>
             </div>
           </div>
 
           <div className='row m-0'>
             <div className='col-md-12 p-0 pt-4 pb-4'>
-                <form action='' className='bg-light p-4.m-auto'>
+                <form action='' className='bg-light p-4 m-auto'>
                     <div className='row'>
                         <div className='col-md-12'>
                           <div className='mb-3'>
@@ -302,7 +239,7 @@ function App() {
                       
                         <div className='col-md-12'>
                           <div className='mb-3'>
-                          <textarea name='' rows="3" required className='form-control' placeholder='Your Query Here'/>
+                            <textarea name='' rows="3" required className='form-control' placeholder='Your Query Here'/>
                           </div>
                         </div>
 
@@ -314,15 +251,12 @@ function App() {
         </div>
       </section>
 
-
-      {/* footer */} 
+      {/* Footer */}
       <footer className='bg-dark p-2 text-center'>
         <div className='container'>
           <p className='text-white'>All Right Reserved</p>
         </div>
       </footer>
-
-
     </div>
   );
 }
