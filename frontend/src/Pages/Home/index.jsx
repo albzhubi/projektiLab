@@ -4,6 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Banner from '../../images/banner.png'
+import GeneralIcon from '../../components/icons/GeneralIcom';
+import './index.css';
+import Button from 'react-bootstrap/Button';
+
 
 const Home = () => {
     return <>
@@ -17,9 +21,11 @@ const Home = () => {
                     <Col xs={12} md={6}>
                         {/* Second column with title, subtitle, and content */}
                         <div className="banner-content">
-                            <h2>Title</h2>
-                            <h4>Subtitle</h4>
-                            <p>Content goes here...</p>
+                            <GeneralIcon />
+                            <h4 className='pre-title'>Best Quality Products</h4>
+                            <h2 className='title'>Join The Pharmaoic Movement!</h2>
+                            <p className='content'>Content goes here Content goes here Content goes here...</p>
+                            <Button className='shop-now-btn'>Shop now</Button>{' '}
                         </div>
                     </Col>
                 </Row>

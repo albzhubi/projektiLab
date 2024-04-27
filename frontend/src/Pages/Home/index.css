@@ -1,0 +1,27 @@
+.banner{
+    background-color: transparent;
+    background-image: linear-gradient(160deg,
+    #fff 0%, #f8f6f3 100%);
+}
+.pre-title{
+    line-height: 1.2em;
+    font-size: 1.0625rem;
+}
+
+.title{
+    font-size: 3.25rem;
+    line-height: 1.4em;
+}
+
+.content{
+    font-size: 100%;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+.shop-now-btn{
+    background-color: #6a9739;
+    border-color: #6a9739;
+    margin-top: 16px
+}
