@@ -7,6 +7,7 @@ import Banner from '../../images/banner.png'
 import GeneralIcon from '../../components/icons/GeneralIcom';
 import './index.css';
 import Button from 'react-bootstrap/Button';
+import Product from '../../components/Product';
 
 
 const Home = () => {
@@ -31,6 +32,16 @@ const Home = () => {
                 </Row>
             </Container>
         </div>
+        <Container className='best-products'>
+            <h1>Best Products</h1>
+            <GeneralIcon />
+            <Row className="justify-content-center" lg={4} style={{ marginTop: '16px'}}>
+                <Product />
+                <Product />
+                <Product />
+                <Product />
+            </Row>
+        </Container>
     </>
 }
 

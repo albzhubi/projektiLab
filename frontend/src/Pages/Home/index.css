@@ -23,5 +23,13 @@
 .shop-now-btn{
     background-color: #6a9739;
     border-color: #6a9739;
-    margin-top: 16px
+    margin-top: 16px;
+}
+
+.best-products{
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
